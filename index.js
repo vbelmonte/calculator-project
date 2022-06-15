@@ -8,6 +8,13 @@ let firstOperandFlag = false;
 let secondOperandFlag = false;
 let screenTextHolder = 0;
 let decimalFlag = false;
+let leadingZeroFlag = true;
+
+
+/************************************************************** 
+ * MATHEMATICAL OPERATORS
+ * 
+**************************************************************/
 
 
 function addition(num1, num2) {
@@ -30,11 +37,32 @@ function subtraction(num1, num2) {
     return num1 - num2;
 }
 
+
+
+/************************************************************** 
+ * CASE CHECKERS
+ * 
+**************************************************************/
+
+function decimalChecker(decimal) {
+    if (decimalFlag == false) {
+        createNumber(decimal);
+        printToScreen(decimal);
+        decimalFlag = true;
+    }
+}
+
+function leadingZeroChecker() {
+    return leadingZeroFlag;
+}
+
+
+
+
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
     $("p").text(screenTextHolder);
 }
-
 
 function assignOperator(operator) {
     currentOperator = operator;
@@ -53,14 +81,6 @@ function createNumber(enteredDigit) {
     finalNumber = Number(numberHolder);
 }
 
-
-function decimalChecker(decimal) {
-    if (decimalFlag == false) {
-        createNumber(decimal);
-        printToScreen(decimal);
-        decimalFlag = true;
-    }
-}
 
 
 function animateButton(currentKey) {
@@ -134,6 +154,16 @@ function press(key) {
 
     switch(key) {
         case "0":
+            if (leadingZeroChecker() == true) {
+                animateButton(key); 
+            }
+            else {
+                animateButton(key);
+                printToScreen(key);
+                createNumber(key);
+            }
+            break;
+
         case "1":
         case "2":
         case "3":
@@ -143,9 +173,18 @@ function press(key) {
         case "7":
         case "8":
         case "9":
-            animateButton(key); 
-            printToScreen(key);
-            createNumber(key);
+            if (leadingZeroChecker() == true) {
+                animateButton(key);
+                screenTextHolder = "";
+                printToScreen(key);
+                createNumber(key);
+                leadingZeroFlag = false;
+            }
+            else {
+                animateButton(key);
+                printToScreen(key);
+                createNumber(key);
+            }
             break;
         
         case "+":
@@ -180,6 +219,9 @@ function press(key) {
             break;
         
         case ".":
+            if (leadingZeroChecker() == true) {
+                leadingZeroFlag = false;
+            }
             animateButton(key);
             decimalChecker(key);
             break;
