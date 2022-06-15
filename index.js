@@ -1,62 +1,71 @@
-let firstOperand;
-let secondOperand;
+let firstOperand = undefined;
+let secondOperand = undefined;
 let currentOperator = undefined;
 let operatorFlag = false;
+let numberHolder = 0;
+let finalNumber = 0;
+let firstOperandFlag = false;
+let secondOperandFlag = false;
+let screenTextHolder = 0;
+let decimalFlag = false;
 
 
 function addition(num1, num2) {
-    firstNumber = num1 + num2;
     return num1 + num2;
 }
 
 function division(num1, num2) {
-    firstNumber = num1 / num2;
     return num1 / num2;
 }
 
 function exponent(base, power) {
-    firstNumber = Math.pow(base, power);
     return Math.pow(base, power);
 }
 
 function multiplication(num1, num2) {
-    firstNumber = num1 * num2;
     return num1 * num2;
 }
 
 function subtraction(num1, num2) {
-    firstNumber = num1 - num2;
     return num1 - num2;
 }
 
 function printToScreen(entry) {
-    $("p").text(entry);
+    screenTextHolder = screenTextHolder + entry;
+    $("p").text(screenTextHolder);
 }
 
-
-function assignOperand() {
-
-}
-
-function assignFirstOperand() {
-
-}
-
-function assignSecondOperand() {
-
-}
 
 function assignOperator(operator) {
-    switch(operator) {
-        case "+":
-        case "-":
-        case "x":
-        case "÷":
-            currentOperator = operator;
+    currentOperator = operator;
+}
+
+function assignFirstOperand(operand) {
+    firstOperand = operand;
+}
+
+function assignSecondOperand(operand) {
+    secondOperand = operand;
+}
+
+function createNumber(enteredDigit) {
+    numberHolder = numberHolder + enteredDigit;
+    finalNumber = Number(numberHolder);
+}
+
+
+function decimalChecker(decimal) {
+    if (decimalFlag == false) {
+        createNumber(decimal);
+        printToScreen(decimal);
+        decimalFlag = true;
     }
 }
 
+
 function animateButton(currentKey) {
+    var activeButton;
+
     switch(currentKey) {
         case "0":
         case "1":
@@ -68,93 +77,54 @@ function animateButton(currentKey) {
         case "7":
         case "8":
         case "9":
-            var activeButton = document.querySelector(".n"+currentKey);
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".n"+currentKey);
             break;
 
         case ".":
-            var activeButton = document.querySelector(".decimal");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".decimal");
             break;
 
         case "+":
-            var activeButton = document.querySelector(".add");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".add");
             break;
 
         case "-":
-            var activeButton = document.querySelector(".subtract");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".subtract");
             break;
 
         case "*":
-            var activeButton = document.querySelector(".multiply");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".multiply");
             break;
 
         case "/":
-            var activeButton = document.querySelector(".divide");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".divide");
             break;
 
         case "x":
-            var activeButton = document.querySelector(".multiply");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".multiply");
             break;
 
         case "÷":
-            var activeButton = document.querySelector(".divide");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".divide");
             break;
 
         case "=":
-            var activeButton = document.getElementById("equal");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.getElementById("equal");
             break;
 
         case "Backspace":
-            var activeButton = document.querySelector(".backspace");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
+            activeButton = document.querySelector(".backspace");
             break;
 
         case "c":
-            var activeButton = document.getElementById("clear");
-            activeButton.classList.add("buttonPressed");
-            setTimeout(function() {
-                activeButton.classList.remove("buttonPressed");
-            }, 100);
-            break;
+            activeButton = document.getElementById("clear");
+            break;    
     }
+
+    activeButton.classList.add("buttonPressed");
+    setTimeout(function() {
+        activeButton.classList.remove("buttonPressed");
+    }, 100);
 }
 
 
@@ -175,6 +145,7 @@ function press(key) {
         case "9":
             animateButton(key); 
             printToScreen(key);
+            createNumber(key);
             break;
         
         case "+":
@@ -210,7 +181,7 @@ function press(key) {
         
         case ".":
             animateButton(key);
-            printToScreen(key);
+            decimalChecker(key);
             break;
         
         case "Backspace":
@@ -230,5 +201,4 @@ $("button").click(function()  {
 
 document.addEventListener("keydown", function(event) {
     press(event.key);
-    console.log(event.key);
 });
