@@ -115,6 +115,22 @@ function animateButton(currentKey) {
             }, 100);
             break;
 
+        case "x":
+            var activeButton = document.querySelector(".multiply");
+            activeButton.classList.add("buttonPressed");
+            setTimeout(function() {
+                activeButton.classList.remove("buttonPressed");
+            }, 100);
+            break;
+
+        case "÷":
+            var activeButton = document.querySelector(".divide");
+            activeButton.classList.add("buttonPressed");
+            setTimeout(function() {
+                activeButton.classList.remove("buttonPressed");
+            }, 100);
+            break;
+
         case "=":
             var activeButton = document.getElementById("equal");
             activeButton.classList.add("buttonPressed");
@@ -143,6 +159,9 @@ function animateButton(currentKey) {
 
 
 function press(key) {
+    let division = "÷";
+    let multiplication = "x";
+
     switch(key) {
         case "0":
         case "1":
@@ -155,19 +174,43 @@ function press(key) {
         case "8":
         case "9":
             animateButton(key); 
-            $("p").text(key);
+            printToScreen(key);
             break;
         
         case "+":
         case "-":
+            animateButton(key);
+            printToScreen(key);
+            break;
+
         case "*":
+            animateButton(multiplication);
+            printToScreen(multiplication);
+            break;
+
         case "/":
+            animateButton(division);
+            printToScreen(division);
+            break;
+
+        case "x":
+            animateButton(multiplication);
+            printToScreen(multiplication);
+            break;
+
+        case "÷":
+            animateButton(division);
+            printToScreen(division);
+            break;
+
         case "=":
             animateButton(key);
+            printToScreen(key);
             break;
         
         case ".":
             animateButton(key);
+            printToScreen(key);
             break;
         
         case "Backspace":
@@ -182,7 +225,7 @@ function press(key) {
 
 
 $("button").click(function()  {
-    printToScreen($(this).text());
+    press($(this).text());
 });
 
 document.addEventListener("keydown", function(event) {
