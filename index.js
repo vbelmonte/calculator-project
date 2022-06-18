@@ -16,7 +16,6 @@ let leadingZeroFlag = true;
  * 
 **************************************************************/
 
-
 function addition(num1, num2) {
     return num1 + num2;
 }
@@ -58,6 +57,34 @@ function leadingZeroChecker() {
 
 
 
+/************************************************************** 
+ * CLEAR AND BACKSPACE
+ * 
+**************************************************************/
+
+function clear() {
+    firstOperand = undefined;
+    secondOperand = undefined;
+    currentOperator = undefined;
+    operatorFlag = false;
+    numberHolder = 0;
+    finalNumber = 0;
+    firstOperandFlag = false;
+    secondOperandFlag = false;
+    screenTextHolder = 0;
+    decimalFlag = false;
+    leadingZeroFlag = true;
+    clearScreen();
+}
+
+function clearScreen() {
+    $("p").text("0");
+}
+
+
+
+
+
 
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
@@ -76,11 +103,82 @@ function assignSecondOperand(operand) {
     secondOperand = operand;
 }
 
+function assignOperand() {
+    if (firstOperandFlag == false) {
+        assignFirstOperand(finalNumber);
+        firstOperandFlag = true;
+    }
+    else {
+        assignSecondOperand(finalNumber);
+        secondOperandFlag = true;
+    }
+}
+
+function calculate() {
+    let result;
+    firstOperandFlag = false;
+    secondOperandFlag = false;
+
+    switch(currentOperator) {
+        case "+":
+            result = addition(firstOperand, secondOperand);
+            break;
+
+        case "-":
+            result = subtraction(firstOperand, secondOperand);
+            break;
+        
+        case "*":
+            result = multiplication(firstOperand, secondOperand);
+            break;
+        
+        case "x":
+            result = multiplication(firstOperand, secondOperand);
+            break;
+
+        case "÷":
+            result = division(firstOperand, secondOperand);
+            break;
+
+        case "/":
+            result = division(firstOperand, secondOperand);
+            break;
+    }
+
+    createNumber(result);
+    clearScreenEmpty();
+    printToScreen(result);
+}
+
 function createNumber(enteredDigit) {
     numberHolder = numberHolder + enteredDigit;
     finalNumber = Number(numberHolder);
 }
 
+function clearScreenEmpty() {
+    screenTextHolder = "";
+    $("p").text(screenTextHolder);
+}
+
+function clearFinalNumber() {
+    finalNumber = 0;
+}
+
+function clearNumberHolder() {
+    numberHolder = 0;
+}
+
+function clearCreateNumber() {
+    clearNumberHolder();
+    clearFinalNumber();
+}
+
+
+
+/************************************************************** 
+ * BUTTON FUNCTIONS
+ * 
+**************************************************************/
 
 
 function animateButton(currentKey) {
@@ -136,9 +234,13 @@ function animateButton(currentKey) {
             activeButton = document.querySelector(".backspace");
             break;
 
+        case "clear":
+            activeButton = document.getElementById("clear");
+            break;
+
         case "c":
             activeButton = document.getElementById("clear");
-            break;    
+            break;
     }
 
     activeButton.classList.add("buttonPressed");
@@ -191,31 +293,47 @@ function press(key) {
         case "-":
             animateButton(key);
             printToScreen(key);
+            assignOperand();
+            assignOperator(key);
+            clearCreateNumber();
             break;
 
         case "*":
             animateButton(multiplication);
             printToScreen(multiplication);
+            assignOperand();
+            assignOperator(key);
+            clearCreateNumber();
             break;
 
         case "/":
             animateButton(division);
             printToScreen(division);
+            assignOperand();
+            assignOperator(key);
+            clearCreateNumber();
             break;
 
         case "x":
             animateButton(multiplication);
             printToScreen(multiplication);
+            assignOperand();
+            assignOperator(key);
+            clearCreateNumber();
             break;
 
         case "÷":
             animateButton(division);
             printToScreen(division);
+            assignOperand();
+            assignOperator(key);
+            clearCreateNumber();
             break;
 
         case "=":
             animateButton(key);
-            printToScreen(key);
+            assignOperand();
+            calculate();
             break;
         
         case ".":
@@ -230,12 +348,23 @@ function press(key) {
             animateButton(key);
             break;
         
+        case "clear":
+            animateButton(key);
+            clear();
+            break;
+        
         case "c":
             animateButton(key);
+            clear();
             break;
     }
 }
 
+
+/************************************************************** 
+ * CLICK AND TYPE FUNCTIONS
+ * 
+**************************************************************/
 
 $("button").click(function()  {
     press($(this).text());
