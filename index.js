@@ -6,7 +6,7 @@ let numberHolder = 0;
 let finalNumber = 0;
 let firstOperandFlag = false;
 let secondOperandFlag = false;
-let screenTextHolder = 0;
+let screenTextHolder = "0";
 let decimalFlag = false;
 let leadingZeroFlag = true;
 
@@ -71,7 +71,7 @@ function clear() {
     finalNumber = 0;
     firstOperandFlag = false;
     secondOperandFlag = false;
-    screenTextHolder = 0;
+    screenTextHolder = "0";
     decimalFlag = false;
     leadingZeroFlag = true;
     clearScreen();
@@ -84,6 +84,10 @@ function clearScreen() {
 
 
 
+function replaceLastCharacter(entry) {
+    screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-1);
+    printToScreen(entry);
+}
 
 
 function printToScreen(entry) {
@@ -91,17 +95,21 @@ function printToScreen(entry) {
     $("p").text(screenTextHolder);
 }
 
+
 function assignOperator(operator) {
     currentOperator = operator;
 }
+
 
 function assignFirstOperand(operand) {
     firstOperand = operand;
 }
 
+
 function assignSecondOperand(operand) {
     secondOperand = operand;
 }
+
 
 function assignOperand() {
     if (firstOperandFlag == false) {
@@ -113,6 +121,7 @@ function assignOperand() {
         secondOperandFlag = true;
     }
 }
+
 
 function calculate() {
     let result;
@@ -150,23 +159,28 @@ function calculate() {
     printToScreen(result);
 }
 
+
 function createNumber(enteredDigit) {
     numberHolder = numberHolder + enteredDigit;
     finalNumber = Number(numberHolder);
 }
+
 
 function clearScreenEmpty() {
     screenTextHolder = "";
     $("p").text(screenTextHolder);
 }
 
+
 function clearFinalNumber() {
-    finalNumber = 0;
+    finalNumber = undefined;
 }
+
 
 function clearNumberHolder() {
     numberHolder = 0;
 }
+
 
 function clearCreateNumber() {
     clearNumberHolder();
@@ -259,6 +273,10 @@ function press(key) {
             if (leadingZeroChecker() == true) {
                 animateButton(key); 
             }
+            else if (finalNumber == undefined) {
+                printToScreen(key);
+                leadingZeroFlag = true;
+            }
             else {
                 animateButton(key);
                 printToScreen(key);
@@ -277,8 +295,7 @@ function press(key) {
         case "9":
             if (leadingZeroChecker() == true) {
                 animateButton(key);
-                screenTextHolder = "";
-                printToScreen(key);
+                replaceLastCharacter(key);
                 createNumber(key);
                 leadingZeroFlag = false;
             }
@@ -304,6 +321,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            leadingZeroFlag = true;
             break;
 
         case "/":
@@ -312,6 +330,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            leadingZeroFlag = true;
             break;
 
         case "x":
@@ -320,6 +339,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            leadingZeroFlag = true;
             break;
 
         case "÷":
@@ -328,12 +348,14 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            leadingZeroFlag = true;
             break;
 
         case "=":
             animateButton(key);
             assignOperand();
             calculate();
+            leadingZeroFlag = true;
             break;
         
         case ".":
