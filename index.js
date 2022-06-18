@@ -321,7 +321,6 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
-            leadingZeroFlag = true;
             break;
 
         case "/":
@@ -330,7 +329,6 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
-            leadingZeroFlag = true;
             break;
 
         case "x":
@@ -339,7 +337,6 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
-            leadingZeroFlag = true;
             break;
 
         case "÷":
@@ -348,14 +345,12 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
-            leadingZeroFlag = true;
             break;
 
         case "=":
             animateButton(key);
             assignOperand();
             calculate();
-            leadingZeroFlag = true;
             break;
         
         case ".":
