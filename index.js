@@ -55,6 +55,10 @@ function leadingZeroChecker() {
     return leadingZeroFlag;
 }
 
+function resetDecimalFlag() {
+    decimalFlag = false;
+}
+
 
 
 /************************************************************** 
@@ -313,6 +317,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            resetDecimalFlag();
             break;
 
         case "*":
@@ -321,6 +326,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            resetDecimalFlag();
             break;
 
         case "/":
@@ -329,6 +335,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            resetDecimalFlag();
             break;
 
         case "x":
@@ -337,6 +344,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            resetDecimalFlag();
             break;
 
         case "÷":
@@ -345,6 +353,7 @@ function press(key) {
             assignOperand();
             assignOperator(key);
             clearCreateNumber();
+            resetDecimalFlag();
             break;
 
         case "=":
