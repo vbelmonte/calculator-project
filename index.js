@@ -292,10 +292,11 @@ function press(key) {
 
     switch(key) {
         case "0":
-            if (leadingZeroChecker() == true) {
+            if (leadingZeroChecker() == true && finalNumber == 0) {
                 animateButton(key); 
             }
             else if (finalNumber == undefined) {
+                createNumber(key);
                 printToScreen(key);
                 leadingZeroFlag = true;
             }
@@ -337,6 +338,7 @@ function press(key) {
             assignOperator(key);
             clearCreateNumber();
             resetDecimalFlag();
+            leadingZeroFlag = true;
             break;
 
         case "*":
@@ -384,7 +386,7 @@ function press(key) {
         case ".":
             if (leadingZeroChecker() == true) {
                 leadingZeroFlag = false;
-                /*decimalLeadingZero();*/
+                decimalLeadingZero();
             }
             animateButton(key);
             decimalChecker(key);
