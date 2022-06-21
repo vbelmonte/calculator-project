@@ -51,12 +51,30 @@ function decimalChecker(decimal) {
     }
 }
 
-function leadingZeroChecker() {
-    return leadingZeroFlag;
+function decimalLeadingZero() {
+    if (decimalFlag == false) {
+        if (screenTextHolder.substring(screenTextHolder.length-1) != 0) {
+            createNumber("0");
+            printToScreen("0");
+        }
+    }
 }
 
 function resetDecimalFlag() {
     decimalFlag = false;
+}
+
+function leadingZeroChecker() {
+    return leadingZeroFlag;
+}
+
+function lastCharacterChecker(entry) {
+    if (screenTextHolder.substring(screenTextHolder.length-1) == 0) {
+        replaceLastCharacter(entry);
+    }
+    else {
+        printToScreen(entry);
+    }
 }
 
 
@@ -299,7 +317,8 @@ function press(key) {
         case "9":
             if (leadingZeroChecker() == true) {
                 animateButton(key);
-                replaceLastCharacter(key);
+                lastCharacterChecker(key);
+                /*replaceLastCharacter(key);*/
                 createNumber(key);
                 leadingZeroFlag = false;
             }
@@ -365,6 +384,7 @@ function press(key) {
         case ".":
             if (leadingZeroChecker() == true) {
                 leadingZeroFlag = false;
+                /*decimalLeadingZero();*/
             }
             animateButton(key);
             decimalChecker(key);
