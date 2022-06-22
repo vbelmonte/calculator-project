@@ -105,6 +105,10 @@ function clearScreen() {
 
 
 
+/************************************************************** 
+ * OTHER BACKEND FUNCTIONS
+ * 
+**************************************************************/
 
 function replaceLastCharacter(entry) {
     screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-1);
@@ -176,9 +180,19 @@ function calculate() {
             break;
     }
 
+    clearCreateNumber();
     createNumber(result);
     clearScreenEmpty();
     printToScreen(result);
+}
+
+
+function continuousCalculation(entry) {
+    if (secondOperandFlag == true) {
+        calculate();
+        printToScreen(entry);
+        assignOperand();
+    }
 }
 
 
@@ -335,6 +349,7 @@ function press(key) {
             animateButton(key);
             printToScreen(key);
             assignOperand();
+            continuousCalculation(key);
             assignOperator(key);
             clearCreateNumber();
             resetDecimalFlag();
@@ -345,36 +360,44 @@ function press(key) {
             animateButton(multiplication);
             printToScreen(multiplication);
             assignOperand();
+            continuousCalculation(key);
             assignOperator(key);
             clearCreateNumber();
             resetDecimalFlag();
+            leadingZeroFlag = true;
             break;
 
         case "/":
             animateButton(division);
             printToScreen(division);
             assignOperand();
+            continuousCalculation(key);
             assignOperator(key);
             clearCreateNumber();
             resetDecimalFlag();
+            leadingZeroFlag = true;
             break;
 
         case "x":
             animateButton(multiplication);
             printToScreen(multiplication);
             assignOperand();
+            continuousCalculation(key);
             assignOperator(key);
             clearCreateNumber();
             resetDecimalFlag();
+            leadingZeroFlag = true;
             break;
 
         case "÷":
             animateButton(division);
             printToScreen(division);
             assignOperand();
+            continuousCalculation(key);
             assignOperator(key);
             clearCreateNumber();
             resetDecimalFlag();
+            leadingZeroFlag = true;
             break;
 
         case "=":
