@@ -77,6 +77,18 @@ function lastCharacterChecker(entry) {
     }
 }
 
+function replaceOperator(operator) {
+    if (currentOperator != undefined) {
+        assignOperator(operator);
+        replaceLastCharacter(operator);
+    }
+    else {
+        assignOperator(operator);
+        assignOperand();
+        printToScreen(operator);
+    }
+}
+
 
 
 /************************************************************** 
@@ -347,10 +359,11 @@ function press(key) {
         case "+":
         case "-":
             animateButton(key);
-            printToScreen(key);
-            assignOperand();
+            /*printToScreen(key);*/
+            replaceOperator(key);
+            /*assignOperand();*/
             continuousCalculation(key);
-            assignOperator(key);
+            /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
