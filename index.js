@@ -60,6 +60,15 @@ function decimalLeadingZero() {
     }
 }
 
+function infinityNaNCheck(input) {
+    if (input == Infinity || input == NaN) {
+        return "Error";
+    }
+    else {
+        return input;
+    }
+}
+
 function resetDecimalFlag() {
     decimalFlag = false;
 }
@@ -191,6 +200,8 @@ function calculate() {
             result = division(firstOperand, secondOperand);
             break;
     }
+
+    result = infinityNaNCheck(result);
 
     clearCreateNumber();
     createNumber(result);
