@@ -371,21 +371,11 @@ function press(key) {
 
         case "*":
             animateButton(multiplication);
-            printToScreen(multiplication);
-            assignOperand();
+            /*printToScreen(multiplication);*/
+            replaceOperator(multiplication);
+            /*assignOperand();*/
             continuousCalculation(key);
-            assignOperator(key);
-            clearCreateNumber();
-            resetDecimalFlag();
-            leadingZeroFlag = true;
-            break;
-
-        case "/":
-            animateButton(division);
-            printToScreen(division);
-            assignOperand();
-            continuousCalculation(key);
-            assignOperator(key);
+            /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
@@ -393,10 +383,23 @@ function press(key) {
 
         case "x":
             animateButton(multiplication);
-            printToScreen(multiplication);
-            assignOperand();
+            /*printToScreen(multiplication);*/
+            replaceOperator(multiplication);
+            /*assignOperand();*/
             continuousCalculation(key);
-            assignOperator(key);
+            /*assignOperator(key);*/
+            clearCreateNumber();
+            resetDecimalFlag();
+            leadingZeroFlag = true;
+            break;
+
+        case "/":
+            animateButton(division);
+            /*printToScreen(division);*/
+            replaceOperator(division);
+            /*assignOperand();*/
+            continuousCalculation(key);
+            /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
@@ -404,10 +407,11 @@ function press(key) {
 
         case "÷":
             animateButton(division);
-            printToScreen(division);
-            assignOperand();
+            /*printToScreen(division);*/
+            replaceOperator(division);
+            /*assignOperand();*/
             continuousCalculation(key);
-            assignOperator(key);
+            /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
