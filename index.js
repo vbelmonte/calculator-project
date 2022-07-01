@@ -3,6 +3,7 @@ let secondOperand = undefined;
 let assignOperandFlag = true;
 let currentOperator = undefined;
 let operatorFlag = false;
+let equalClearFlag = false;
 let numberHolder = 0;
 let finalNumber = 0;
 let firstOperandFlag = false;
@@ -112,6 +113,7 @@ function clear() {
     assignOperandFlag = true;
     currentOperator = undefined;
     operatorFlag = false;
+    equalClearFlag = false;
     numberHolder = 0;
     finalNumber = 0;
     firstOperandFlag = false;
@@ -341,6 +343,10 @@ function press(key) {
 
     switch(key) {
         case "0":
+            if (equalClearFlag == true) {
+                clear();
+                equalClearFlag = false;
+            }
             if (leadingZeroChecker() == true && finalNumber == 0) {
                 animateButton(key); 
             }
@@ -365,6 +371,10 @@ function press(key) {
         case "7":
         case "8":
         case "9":
+            if (equalClearFlag == true) {
+                clear();
+                equalClearFlag = false;
+            }
             if (leadingZeroChecker() == true) {
                 animateButton(key);
                 lastCharacterChecker(key);
@@ -392,6 +402,7 @@ function press(key) {
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "*":
@@ -405,6 +416,7 @@ function press(key) {
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "x":
@@ -418,6 +430,7 @@ function press(key) {
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "/":
@@ -431,6 +444,7 @@ function press(key) {
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "÷":
@@ -444,12 +458,14 @@ function press(key) {
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "=":
             animateButton(key);
             assignOperand();
             calculate();
+            equalClearFlag = true;
             break;
         
         case ".":
