@@ -184,6 +184,7 @@ function calculate() {
     let result;
     firstOperandFlag = false;
     secondOperandFlag = false;
+    assignOperandFlag = true;
 
     switch(currentOperator) {
         case "+":
@@ -212,6 +213,7 @@ function calculate() {
     }
 
     result = infinityNaNCheck(result);
+    currentOperator = undefined;
 
     clearCreateNumber();
     createNumber(result);
@@ -223,8 +225,8 @@ function calculate() {
 function continuousCalculation(entry) {
     if (secondOperandFlag == true) {
         calculate();
-        /*printToScreen(entry);
-        assignOperand();*/
+        /*printToScreen(entry);*/
+        assignOperand();
     }
 }
 
