@@ -1,12 +1,14 @@
 let firstOperand = undefined;
 let secondOperand = undefined;
+let assignOperandFlag = true;
 let currentOperator = undefined;
 let operatorFlag = false;
+let equalClearFlag = false;
 let numberHolder = 0;
 let finalNumber = 0;
 let firstOperandFlag = false;
 let secondOperandFlag = false;
-let screenTextHolder = 0;
+let screenTextHolder = "0";
 let decimalFlag = false;
 let leadingZeroFlag = true;
 
@@ -51,8 +53,51 @@ function decimalChecker(decimal) {
     }
 }
 
+function decimalLeadingZero() {
+    if (decimalFlag == false) {
+        if (screenTextHolder.substring(screenTextHolder.length-1) != 0) {
+            createNumber("0");
+            printToScreen("0");
+        }
+    }
+}
+
+function infinityNaNCheck(input) {
+    if (input == Infinity || input == NaN) {
+        return "Error";
+    }
+    else {
+        return input;
+    }
+}
+
+function resetDecimalFlag() {
+    decimalFlag = false;
+}
+
 function leadingZeroChecker() {
     return leadingZeroFlag;
+}
+
+function lastCharacterChecker(entry) {
+    if (screenTextHolder.substring(screenTextHolder.length-1) == 0) {
+        replaceLastCharacter(entry);
+    }
+    else {
+        printToScreen(entry);
+    }
+}
+
+function replaceOperator(operator) {
+    if (currentOperator != undefined) {
+        assignOperator(operator);
+        replaceLastCharacter(operator);
+    }
+    else {
+        assignOperator(operator);
+        /*assignOperand();*/
+        printToScreen(operator);
+    }
 }
 
 
@@ -65,13 +110,15 @@ function leadingZeroChecker() {
 function clear() {
     firstOperand = undefined;
     secondOperand = undefined;
+    assignOperandFlag = true;
     currentOperator = undefined;
     operatorFlag = false;
+    equalClearFlag = false;
     numberHolder = 0;
     finalNumber = 0;
     firstOperandFlag = false;
     secondOperandFlag = false;
-    screenTextHolder = 0;
+    screenTextHolder = "0";
     decimalFlag = false;
     leadingZeroFlag = true;
     clearScreen();
@@ -83,7 +130,15 @@ function clearScreen() {
 
 
 
+/************************************************************** 
+ * OTHER BACKEND FUNCTIONS
+ * 
+**************************************************************/
 
+function replaceLastCharacter(entry) {
+    screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-1);
+    printToScreen(entry);
+}
 
 
 function printToScreen(entry) {
@@ -91,33 +146,47 @@ function printToScreen(entry) {
     $("p").text(screenTextHolder);
 }
 
+
 function assignOperator(operator) {
     currentOperator = operator;
 }
+
 
 function assignFirstOperand(operand) {
     firstOperand = operand;
 }
 
+
 function assignSecondOperand(operand) {
     secondOperand = operand;
 }
 
+
 function assignOperand() {
-    if (firstOperandFlag == false) {
-        assignFirstOperand(finalNumber);
-        firstOperandFlag = true;
+    if (assignOperandFlag == true) {
+        if (firstOperandFlag == false) {
+            assignFirstOperand(finalNumber);
+            firstOperandFlag = true;
+            assignOperandFlag = false;
+            
+        }
+        else {
+            assignSecondOperand(finalNumber);
+            secondOperandFlag = true;
+            assignOperandFlag = false;
+        }
     }
-    else {
-        assignSecondOperand(finalNumber);
-        secondOperandFlag = true;
-    }
+}
+
+function checkAssignOperandFlag() {
+    return assignOperandFlag;
 }
 
 function calculate() {
     let result;
     firstOperandFlag = false;
     secondOperandFlag = false;
+    assignOperandFlag = true;
 
     switch(currentOperator) {
         case "+":
@@ -145,28 +214,46 @@ function calculate() {
             break;
     }
 
+    result = infinityNaNCheck(result);
+    currentOperator = undefined;
+
+    clearCreateNumber();
     createNumber(result);
     clearScreenEmpty();
     printToScreen(result);
 }
+
+
+function continuousCalculation(entry) {
+    if (secondOperandFlag == true) {
+        calculate();
+        /*printToScreen(entry);*/
+        assignOperand();
+    }
+}
+
 
 function createNumber(enteredDigit) {
     numberHolder = numberHolder + enteredDigit;
     finalNumber = Number(numberHolder);
 }
 
+
 function clearScreenEmpty() {
     screenTextHolder = "";
     $("p").text(screenTextHolder);
 }
 
+
 function clearFinalNumber() {
-    finalNumber = 0;
+    finalNumber = undefined;
 }
+
 
 function clearNumberHolder() {
     numberHolder = 0;
 }
+
 
 function clearCreateNumber() {
     clearNumberHolder();
@@ -256,8 +343,17 @@ function press(key) {
 
     switch(key) {
         case "0":
-            if (leadingZeroChecker() == true) {
+            if (equalClearFlag == true) {
+                clear();
+                equalClearFlag = false;
+            }
+            if (leadingZeroChecker() == true && finalNumber == 0) {
                 animateButton(key); 
+            }
+            else if (finalNumber == undefined) {
+                createNumber(key);
+                printToScreen(key);
+                leadingZeroFlag = true;
             }
             else {
                 animateButton(key);
@@ -275,10 +371,14 @@ function press(key) {
         case "7":
         case "8":
         case "9":
+            if (equalClearFlag == true) {
+                clear();
+                equalClearFlag = false;
+            }
             if (leadingZeroChecker() == true) {
                 animateButton(key);
-                screenTextHolder = "";
-                printToScreen(key);
+                lastCharacterChecker(key);
+                /*replaceLastCharacter(key);*/
                 createNumber(key);
                 leadingZeroFlag = false;
             }
@@ -287,58 +387,91 @@ function press(key) {
                 printToScreen(key);
                 createNumber(key);
             }
+            assignOperandFlag = true;
             break;
         
         case "+":
         case "-":
             animateButton(key);
-            printToScreen(key);
             assignOperand();
-            assignOperator(key);
+            /*printToScreen(key);*/
+            continuousCalculation(key);
+            replaceOperator(key);
+            /*assignOperand();*/
+            /*assignOperator(key);*/
             clearCreateNumber();
+            resetDecimalFlag();
+            leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "*":
             animateButton(multiplication);
-            printToScreen(multiplication);
             assignOperand();
-            assignOperator(key);
+            /*printToScreen(multiplication);*/
+            continuousCalculation(key);
+            replaceOperator(multiplication);
+            /*assignOperand();*/
+            /*assignOperator(key);*/
             clearCreateNumber();
-            break;
-
-        case "/":
-            animateButton(division);
-            printToScreen(division);
-            assignOperand();
-            assignOperator(key);
-            clearCreateNumber();
+            resetDecimalFlag();
+            leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "x":
             animateButton(multiplication);
-            printToScreen(multiplication);
             assignOperand();
-            assignOperator(key);
+            /*printToScreen(multiplication);*/
+            continuousCalculation(key);
+            replaceOperator(multiplication);
+            /*assignOperand();*/
+            /*assignOperator(key);*/
             clearCreateNumber();
+            resetDecimalFlag();
+            leadingZeroFlag = true;
+            equalClearFlag = false;
+            break;
+
+        case "/":
+            animateButton(division);
+            assignOperand();
+            /*printToScreen(division);*/
+            continuousCalculation(key);
+            replaceOperator(division);
+            /*assignOperand();*/
+            /*assignOperator(key);*/
+            clearCreateNumber();
+            resetDecimalFlag();
+            leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "÷":
             animateButton(division);
-            printToScreen(division);
             assignOperand();
-            assignOperator(key);
+            /*printToScreen(division);*/
+            continuousCalculation(key);
+            replaceOperator(division);
+            /*assignOperand();*/
+            /*assignOperator(key);*/
             clearCreateNumber();
+            resetDecimalFlag();
+            leadingZeroFlag = true;
+            equalClearFlag = false;
             break;
 
         case "=":
             animateButton(key);
             assignOperand();
             calculate();
+            equalClearFlag = true;
             break;
         
         case ".":
             if (leadingZeroChecker() == true) {
                 leadingZeroFlag = false;
+                decimalLeadingZero();
             }
             animateButton(key);
             decimalChecker(key);
