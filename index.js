@@ -1,5 +1,6 @@
 let firstOperand = undefined;
 let secondOperand = undefined;
+let assignOperandFlag = true;
 let currentOperator = undefined;
 let operatorFlag = false;
 let numberHolder = 0;
@@ -93,7 +94,7 @@ function replaceOperator(operator) {
     }
     else {
         assignOperator(operator);
-        assignOperand();
+        /*assignOperand();*/
         printToScreen(operator);
     }
 }
@@ -108,6 +109,7 @@ function replaceOperator(operator) {
 function clear() {
     firstOperand = undefined;
     secondOperand = undefined;
+    assignOperandFlag = true;
     currentOperator = undefined;
     operatorFlag = false;
     numberHolder = 0;
@@ -159,16 +161,24 @@ function assignSecondOperand(operand) {
 
 
 function assignOperand() {
-    if (firstOperandFlag == false) {
-        assignFirstOperand(finalNumber);
-        firstOperandFlag = true;
-    }
-    else {
-        assignSecondOperand(finalNumber);
-        secondOperandFlag = true;
+    if (assignOperandFlag == true) {
+        if (firstOperandFlag == false) {
+            assignFirstOperand(finalNumber);
+            firstOperandFlag = true;
+            assignOperandFlag = false;
+            
+        }
+        else {
+            assignSecondOperand(finalNumber);
+            secondOperandFlag = true;
+            assignOperandFlag = false;
+        }
     }
 }
 
+function checkAssignOperandFlag() {
+    return assignOperandFlag;
+}
 
 function calculate() {
     let result;
@@ -213,8 +223,8 @@ function calculate() {
 function continuousCalculation(entry) {
     if (secondOperandFlag == true) {
         calculate();
-        printToScreen(entry);
-        assignOperand();
+        /*printToScreen(entry);
+        assignOperand();*/
     }
 }
 
@@ -365,15 +375,17 @@ function press(key) {
                 printToScreen(key);
                 createNumber(key);
             }
+            assignOperandFlag = true;
             break;
         
         case "+":
         case "-":
             animateButton(key);
+            assignOperand();
             /*printToScreen(key);*/
+            continuousCalculation(key);
             replaceOperator(key);
             /*assignOperand();*/
-            continuousCalculation(key);
             /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
@@ -382,10 +394,11 @@ function press(key) {
 
         case "*":
             animateButton(multiplication);
+            assignOperand();
             /*printToScreen(multiplication);*/
+            continuousCalculation(key);
             replaceOperator(multiplication);
             /*assignOperand();*/
-            continuousCalculation(key);
             /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
@@ -394,10 +407,11 @@ function press(key) {
 
         case "x":
             animateButton(multiplication);
+            assignOperand();
             /*printToScreen(multiplication);*/
+            continuousCalculation(key);
             replaceOperator(multiplication);
             /*assignOperand();*/
-            continuousCalculation(key);
             /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
@@ -406,10 +420,11 @@ function press(key) {
 
         case "/":
             animateButton(division);
+            assignOperand();
             /*printToScreen(division);*/
+            continuousCalculation(key);
             replaceOperator(division);
             /*assignOperand();*/
-            continuousCalculation(key);
             /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
@@ -418,10 +433,11 @@ function press(key) {
 
         case "÷":
             animateButton(division);
+            assignOperand();
             /*printToScreen(division);*/
+            continuousCalculation(key);
             replaceOperator(division);
             /*assignOperand();*/
-            continuousCalculation(key);
             /*assignOperator(key);*/
             clearCreateNumber();
             resetDecimalFlag();
