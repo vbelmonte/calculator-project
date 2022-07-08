@@ -469,6 +469,10 @@ function press(key) {
             break;
         
         case ".":
+            if (equalClearFlag == true) {
+                clear();
+                equalClearFlag = false;
+            }
             if (leadingZeroChecker() == true) {
                 leadingZeroFlag = false;
                 decimalLeadingZero();
