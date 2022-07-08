@@ -91,12 +91,15 @@ function lastCharacterChecker(entry) {
 function replaceOperator(operator) {
     if (currentOperator != undefined) {
         assignOperator(operator);
-        replaceLastCharacter(operator);
+        /*replaceLastCharacter(operator);*/
+        let txt = "<br>" + operator + "<br>";
+        replaceLastCharacterOperator(txt);
     }
     else {
+        let txt = "<br>" + operator + "<br>";
         assignOperator(operator);
         /*assignOperand();*/
-        printToScreen(operator);
+        printToScreen(txt);
     }
 }
 
@@ -140,10 +143,16 @@ function replaceLastCharacter(entry) {
     printToScreen(entry);
 }
 
+function replaceLastCharacterOperator(entry) {
+    screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-9)
+    printToScreen(entry);
+}
+
 
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
-    $("p").text(screenTextHolder);
+    /*$("p").text(screenTextHolder);*/
+    $("p").html(screenTextHolder);
 }
 
 
