@@ -48,6 +48,7 @@ function subtraction(num1, num2) {
 
 function decimalChecker(decimal) {
     if (decimalFlag == false) {
+        createStringFromNumber(decimal);
         createNumber(decimal);
         printToScreen(decimal);
         decimalFlag = true;
@@ -141,16 +142,41 @@ function clearScreen() {
 **************************************************************/
 
 function checkOperandLength() {
-    if (numberToString.length < 18) {
-        return true;
+    if (checkDecimalInNumberToString() == false) {
+        console.log("The string does not have a decimal");
+        if (numberToString.length < 18) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     else {
-        return false;
+        console.log("The string has a decimal");
+        if (numberToString.length < 19) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 
 function createStringFromNumber(entry) {
     numberToString += entry;
+}
+
+function checkDecimalInNumberToString() {
+    let result  = false;
+    let i = 0;
+    while (i < numberToString.length) {
+        if (numberToString[i] == ".") {
+            result = true;
+            break;
+        }
+        i++;
+    }
+    return result;
 }
 
 function replaceLastCharacter(entry) {
