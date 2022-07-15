@@ -6,6 +6,7 @@ let operatorFlag = false;
 let equalClearFlag = false;
 let numberHolder = 0;
 let finalNumber = 0;
+let numberToString = "";
 let firstOperandFlag = false;
 let secondOperandFlag = false;
 let screenTextHolder = "0";
@@ -119,6 +120,7 @@ function clear() {
     equalClearFlag = false;
     numberHolder = 0;
     finalNumber = 0;
+    numberToString = "";
     firstOperandFlag = false;
     secondOperandFlag = false;
     screenTextHolder = "0";
@@ -137,6 +139,19 @@ function clearScreen() {
  * OTHER BACKEND FUNCTIONS
  * 
 **************************************************************/
+
+function checkOperandLength() {
+    if (numberToString.length < 18) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function createStringFromNumber(entry) {
+    numberToString += entry;
+}
 
 function replaceLastCharacter(entry) {
     screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-1);
@@ -226,10 +241,20 @@ function calculate() {
     result = infinityNaNCheck(result);
     currentOperator = undefined;
 
-    clearCreateNumber();
-    createNumber(result);
-    clearScreenEmpty();
-    printToScreen(result);
+    if (result == "Error") {
+        clearCreateNumber();
+        clearNumberToString();
+        clearScreenEmpty();
+        printToScreen(result);
+    }
+    else {
+        clearCreateNumber();
+        clearNumberToString();
+        createStringFromNumber(result);
+        createNumber(result);
+        clearScreenEmpty();
+        printToScreen(result);
+    }
 }
 
 
@@ -243,7 +268,9 @@ function continuousCalculation(entry) {
 
 
 function createNumber(enteredDigit) {
+    console.log("entered digit: " + enteredDigit);
     numberHolder = numberHolder + enteredDigit;
+    console.log("numberHolder: " + numberHolder);
     finalNumber = Number(numberHolder);
 }
 
@@ -269,6 +296,9 @@ function clearCreateNumber() {
     clearFinalNumber();
 }
 
+function clearNumberToString() {
+    numberToString = "";
+}
 
 
 /************************************************************** 
@@ -352,7 +382,28 @@ function press(key) {
 
     switch(key) {
         case "0":
-            if (equalClearFlag == true) {
+            if (checkOperandLength() == true) {
+                if (equalClearFlag == true) {
+                    clear();
+                    equalClearFlag = false;
+                }
+                if (leadingZeroChecker() == true && finalNumber == 0) {
+                    animateButton(key); 
+                }
+                else if (finalNumber == undefined) {
+                    createStringFromNumber(key);
+                    createNumber(key);
+                    printToScreen(key);
+                    leadingZeroFlag = true;
+                }
+                else {
+                    animateButton(key);
+                    printToScreen(key);
+                    createStringFromNumber(key);
+                    createNumber(key);
+                }
+            }
+            /*if (equalClearFlag == true) {
                 clear();
                 equalClearFlag = false;
             }
@@ -368,7 +419,7 @@ function press(key) {
                 animateButton(key);
                 printToScreen(key);
                 createNumber(key);
-            }
+            }*/
             break;
 
         case "1":
@@ -380,23 +431,46 @@ function press(key) {
         case "7":
         case "8":
         case "9":
-            if (equalClearFlag == true) {
+            if (checkOperandLength() == true) {
+                if (equalClearFlag == true) {
+                    clear();
+                    equalClearFlag = false;
+                }
+                if (leadingZeroChecker() == true) {
+                    animateButton(key);
+                    lastCharacterChecker(key);
+                    /*replaceLastCharacter(key);*/
+                    createStringFromNumber(key);
+                    createNumber(key);
+                    leadingZeroFlag = false;
+                }
+                else {
+                    animateButton(key);
+                    printToScreen(key);
+                    createStringFromNumber(key);
+                    createNumber(key);
+                }
+                assignOperandFlag = true;
+            }
+            /*if (equalClearFlag == true) {
                 clear();
                 equalClearFlag = false;
             }
             if (leadingZeroChecker() == true) {
                 animateButton(key);
                 lastCharacterChecker(key);
-                /*replaceLastCharacter(key);*/
+                /*replaceLastCharacter(key);
+                createStringFromNumber(key);
                 createNumber(key);
                 leadingZeroFlag = false;
             }
             else {
                 animateButton(key);
                 printToScreen(key);
+                createStringFromNumber(key);
                 createNumber(key);
             }
-            assignOperandFlag = true;
+            assignOperandFlag = true;*/
             break;
         
         case "+":
@@ -408,6 +482,7 @@ function press(key) {
             replaceOperator(key);
             /*assignOperand();*/
             /*assignOperator(key);*/
+            clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
@@ -422,6 +497,7 @@ function press(key) {
             replaceOperator(multiplication);
             /*assignOperand();*/
             /*assignOperator(key);*/
+            clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
@@ -436,6 +512,7 @@ function press(key) {
             replaceOperator(multiplication);
             /*assignOperand();*/
             /*assignOperator(key);*/
+            clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
@@ -450,6 +527,7 @@ function press(key) {
             replaceOperator(division);
             /*assignOperand();*/
             /*assignOperator(key);*/
+            clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
@@ -464,6 +542,7 @@ function press(key) {
             replaceOperator(division);
             /*assignOperand();*/
             /*assignOperator(key);*/
+            clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
             leadingZeroFlag = true;
