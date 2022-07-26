@@ -179,6 +179,16 @@ function checkDecimalInNumberToString() {
     return result;
 }
 
+function deleteLastEntry() {
+    removeLastCharInNumberToString();
+    deleteLastDigitFinalNumber();
+    updateScreen();
+}
+
+function removeLastCharInNumberToString() {
+    numberToString = numberToString.slice(0, numberToString.length-1);
+}
+
 function replaceLastCharacter(entry) {
     screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-1);
     printToScreen(entry);
@@ -193,6 +203,11 @@ function replaceLastCharacterOperator(entry) {
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
     /*$("p").text(screenTextHolder);*/
+    $("p").html(screenTextHolder);
+}
+
+function updateScreen() {
+    screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
     $("p").html(screenTextHolder);
 }
 
@@ -300,6 +315,11 @@ function createNumber(enteredDigit) {
     finalNumber = Number(numberHolder);
 }
 
+function deleteLastDigitFinalNumber() {
+    numberHolder = numberHolder.slice(0, numberHolder.length-1);
+    finalNumber = Number(numberHolder);
+}
+
 
 function clearScreenEmpty() {
     screenTextHolder = "";
@@ -383,6 +403,7 @@ function animateButton(currentKey) {
             break;
 
         case "Backspace":
+        case "←":
             activeButton = document.querySelector(".backspace");
             break;
 
@@ -405,6 +426,7 @@ function animateButton(currentKey) {
 function press(key) {
     let division = "÷";
     let multiplication = "x";
+    console.log(key);
 
     switch(key) {
         case "0":
@@ -596,6 +618,8 @@ function press(key) {
             break;
         
         case "Backspace":
+        case "←":
+            deleteLastEntry();
             animateButton(key);
             break;
         
