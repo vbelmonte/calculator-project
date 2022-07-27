@@ -19,23 +19,23 @@ let leadingZeroFlag = true;
  * 
 **************************************************************/
 
-function addition(num1, num2) {
+function addition(num1, num2 = 0) {
     return num1 + num2;
 }
 
-function division(num1, num2) {
+function division(num1, num2 = 1) {
     return num1 / num2;
 }
 
-function exponent(base, power) {
+function exponent(base, power = 1) {
     return Math.pow(base, power);
 }
 
-function multiplication(num1, num2) {
+function multiplication(num1, num2 = 1) {
     return num1 * num2;
 }
 
-function subtraction(num1, num2) {
+function subtraction(num1, num2 = 0) {
     return num1 - num2;
 }
 
@@ -214,8 +214,24 @@ function printToScreen(entry) {
 }
 
 function updateScreen() {
-    screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
-    $("p").html(screenTextHolder);
+    let char = screenTextHolder[screenTextHolder.length-1];
+
+    switch(char) {
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "0":
+        case ".":
+            screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
+            $("p").html(screenTextHolder);
+            break;
+    }
 }
 
 
@@ -283,6 +299,9 @@ function calculate() {
 
         case "/":
             result = division(firstOperand, secondOperand);
+            break;
+        case undefined:
+            result = finalNumber;
             break;
     }
 
