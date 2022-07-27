@@ -185,7 +185,14 @@ function deleteLastEntry() {
     updateScreen();
 }
 
+function changeDecimalFlag(entry) {
+    if (entry[entry.length-1] == ".") {
+        decimalFlag = false;
+    }
+}
+
 function removeLastCharInNumberToString() {
+    changeDecimalFlag(numberToString);
     numberToString = numberToString.slice(0, numberToString.length-1);
 }
 
