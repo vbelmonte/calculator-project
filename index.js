@@ -469,12 +469,14 @@ function press(key) {
                     createNumber(key);
                     printToScreen(key);
                     leadingZeroFlag = true;
+                    assignOperandFlag = true;
                 }
                 else {
                     animateButton(key);
                     printToScreen(key);
                     createStringFromNumber(key);
                     createNumber(key);
+                    assignOperandFlag = true;
                 }
             }
             /*if (equalClearFlag == true) {
