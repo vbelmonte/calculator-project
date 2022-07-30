@@ -65,7 +65,7 @@ function decimalLeadingZero() {
 }
 
 function infinityNaNCheck(input) {
-    if (input == Infinity || input == NaN) {
+    if (input == Infinity || input == -Infinity || isNaN(input) || input == undefined) {
         return "Error";
     }
     else {
@@ -188,6 +188,13 @@ function deleteLastEntry() {
 function changeDecimalFlag(entry) {
     if (entry[entry.length-1] == ".") {
         decimalFlag = false;
+    }
+}
+
+function checkTrailingDecimal() {
+    if (screenTextHolder[screenTextHolder.length-1] == ".") {
+        screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
+        printToScreen("");
     }
 }
 
@@ -330,6 +337,7 @@ function continuousCalculation(entry) {
         calculate();
         /*printToScreen(entry);*/
         assignOperand();
+        secondOperand = undefined; /*******  LOOK OVER HERE. ADDED THIS TO FIX SECOND OPERAND IF YOU HIT OPERATOR, THEN "=" ********/
     }
 }
 
@@ -552,6 +560,7 @@ function press(key) {
         case "+":
         case "-":
             animateButton(key);
+            checkTrailingDecimal();
             assignOperand();
             /*printToScreen(key);*/
             continuousCalculation(key);
@@ -567,6 +576,7 @@ function press(key) {
 
         case "*":
             animateButton(multiplication);
+            checkTrailingDecimal();
             assignOperand();
             /*printToScreen(multiplication);*/
             continuousCalculation(key);
@@ -582,6 +592,7 @@ function press(key) {
 
         case "x":
             animateButton(multiplication);
+            checkTrailingDecimal();
             assignOperand();
             /*printToScreen(multiplication);*/
             continuousCalculation(key);
@@ -597,6 +608,7 @@ function press(key) {
 
         case "/":
             animateButton(division);
+            checkTrailingDecimal();
             assignOperand();
             /*printToScreen(division);*/
             continuousCalculation(key);
@@ -612,6 +624,7 @@ function press(key) {
 
         case "÷":
             animateButton(division);
+            checkTrailingDecimal();
             assignOperand();
             /*printToScreen(division);*/
             continuousCalculation(key);
@@ -630,6 +643,7 @@ function press(key) {
             assignOperand();
             calculate();
             equalClearFlag = true;
+            secondOperand = undefined; /******* LOOK OVER HERE. ADDED THIS TO FIX SECOND OPERAND IF YOU HIT "=", THEN OPERATOR, THEN "=" *******/
             break;
         
         case ".":
@@ -643,6 +657,7 @@ function press(key) {
             }
             animateButton(key);
             decimalChecker(key);
+            assignOperandFlag = true; /******* LOOK OVER HERE. ADDED THIS TO FIX DIVIDING BY "0." CASES *******/
             break;
         
         case "Backspace":
