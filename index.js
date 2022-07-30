@@ -93,14 +93,12 @@ function lastCharacterChecker(entry) {
 function replaceOperator(operator) {
     if (currentOperator != undefined) {
         assignOperator(operator);
-        /*replaceLastCharacter(operator);*/
         let txt = "<br>" + operator + "<br>";
         replaceLastCharacterOperator(txt);
     }
     else {
         let txt = "<br>" + operator + "<br>";
         assignOperator(operator);
-        /*assignOperand();*/
         printToScreen(txt);
     }
 }
@@ -216,7 +214,6 @@ function replaceLastCharacterOperator(entry) {
 
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
-    /*$("p").text(screenTextHolder);*/
     $("p").html(screenTextHolder);
 }
 
@@ -335,9 +332,8 @@ function calculate() {
 function continuousCalculation(entry) {
     if (secondOperandFlag == true) {
         calculate();
-        /*printToScreen(entry);*/
         assignOperand();
-        secondOperand = undefined; /*******  LOOK OVER HERE. ADDED THIS TO FIX SECOND OPERAND IF YOU HIT OPERATOR, THEN "=" ********/
+        secondOperand = undefined;
     }
 }
 
@@ -487,23 +483,6 @@ function press(key) {
                     assignOperandFlag = true;
                 }
             }
-            /*if (equalClearFlag == true) {
-                clear();
-                equalClearFlag = false;
-            }
-            if (leadingZeroChecker() == true && finalNumber == 0) {
-                animateButton(key); 
-            }
-            else if (finalNumber == undefined) {
-                createNumber(key);
-                printToScreen(key);
-                leadingZeroFlag = true;
-            }
-            else {
-                animateButton(key);
-                printToScreen(key);
-                createNumber(key);
-            }*/
             break;
 
         case "1":
@@ -523,7 +502,6 @@ function press(key) {
                 if (leadingZeroChecker() == true) {
                     animateButton(key);
                     lastCharacterChecker(key);
-                    /*replaceLastCharacter(key);*/
                     createStringFromNumber(key);
                     createNumber(key);
                     leadingZeroFlag = false;
@@ -536,25 +514,6 @@ function press(key) {
                 }
                 assignOperandFlag = true;
             }
-            /*if (equalClearFlag == true) {
-                clear();
-                equalClearFlag = false;
-            }
-            if (leadingZeroChecker() == true) {
-                animateButton(key);
-                lastCharacterChecker(key);
-                /*replaceLastCharacter(key);
-                createStringFromNumber(key);
-                createNumber(key);
-                leadingZeroFlag = false;
-            }
-            else {
-                animateButton(key);
-                printToScreen(key);
-                createStringFromNumber(key);
-                createNumber(key);
-            }
-            assignOperandFlag = true;*/
             break;
         
         case "+":
@@ -562,11 +521,8 @@ function press(key) {
             animateButton(key);
             checkTrailingDecimal();
             assignOperand();
-            /*printToScreen(key);*/
             continuousCalculation(key);
             replaceOperator(key);
-            /*assignOperand();*/
-            /*assignOperator(key);*/
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
@@ -578,11 +534,8 @@ function press(key) {
             animateButton(multiplication);
             checkTrailingDecimal();
             assignOperand();
-            /*printToScreen(multiplication);*/
             continuousCalculation(key);
             replaceOperator(multiplication);
-            /*assignOperand();*/
-            /*assignOperator(key);*/
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
@@ -594,11 +547,8 @@ function press(key) {
             animateButton(multiplication);
             checkTrailingDecimal();
             assignOperand();
-            /*printToScreen(multiplication);*/
             continuousCalculation(key);
             replaceOperator(multiplication);
-            /*assignOperand();*/
-            /*assignOperator(key);*/
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
@@ -610,11 +560,8 @@ function press(key) {
             animateButton(division);
             checkTrailingDecimal();
             assignOperand();
-            /*printToScreen(division);*/
             continuousCalculation(key);
             replaceOperator(division);
-            /*assignOperand();*/
-            /*assignOperator(key);*/
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
@@ -626,11 +573,8 @@ function press(key) {
             animateButton(division);
             checkTrailingDecimal();
             assignOperand();
-            /*printToScreen(division);*/
             continuousCalculation(key);
             replaceOperator(division);
-            /*assignOperand();*/
-            /*assignOperator(key);*/
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
@@ -643,7 +587,7 @@ function press(key) {
             assignOperand();
             calculate();
             equalClearFlag = true;
-            secondOperand = undefined; /******* LOOK OVER HERE. ADDED THIS TO FIX SECOND OPERAND IF YOU HIT "=", THEN OPERATOR, THEN "=" *******/
+            secondOperand = undefined;
             break;
         
         case ".":
@@ -657,7 +601,7 @@ function press(key) {
             }
             animateButton(key);
             decimalChecker(key);
-            assignOperandFlag = true; /******* LOOK OVER HERE. ADDED THIS TO FIX DIVIDING BY "0." CASES *******/
+            assignOperandFlag = true;
             break;
         
         case "Backspace":
