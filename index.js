@@ -46,6 +46,51 @@ function subtraction(num1, num2 = 0) {
  * 
 **************************************************************/
 
+function checkAssignOperandFlag() {
+    return assignOperandFlag;
+}
+
+function checkDecimalInNumberToString() {
+    let result  = false;
+    let i = 0;
+    while (i < numberToString.length) {
+        if (numberToString[i] == ".") {
+            result = true;
+            break;
+        }
+        i++;
+    }
+    return result;
+}
+
+function checkOperandLength() {
+    if (checkDecimalInNumberToString() == false) {
+        console.log("The string does not have a decimal");
+        if (numberToString.length < 18) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        console.log("The string has a decimal");
+        if (numberToString.length < 19) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+function checkTrailingDecimal() {
+    if (screenTextHolder[screenTextHolder.length-1] == ".") {
+        screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
+        printToScreen("");
+    }
+}
+
 function decimalChecker(decimal) {
     if (decimalFlag == false) {
         createStringFromNumber(decimal);
@@ -71,10 +116,6 @@ function infinityNaNCheck(input) {
     else {
         return input;
     }
-}
-
-function resetDecimalFlag() {
-    decimalFlag = false;
 }
 
 function leadingZeroChecker() {
@@ -106,7 +147,7 @@ function replaceOperator(operator) {
 
 
 /************************************************************** 
- * CLEAR AND BACKSPACE
+ * CLEAR, BACKSPACE, AND DELETE FUNCTIONS
  * 
 **************************************************************/
 
@@ -132,49 +173,28 @@ function clearScreen() {
     $("p").text("0");
 }
 
-
-
-/************************************************************** 
- * OTHER BACKEND FUNCTIONS
- * 
-**************************************************************/
-
-function checkOperandLength() {
-    if (checkDecimalInNumberToString() == false) {
-        console.log("The string does not have a decimal");
-        if (numberToString.length < 18) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        console.log("The string has a decimal");
-        if (numberToString.length < 19) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+function clearScreenEmpty() {
+    screenTextHolder = "";
+    $("p").text(screenTextHolder);
 }
 
-function createStringFromNumber(entry) {
-    numberToString += entry;
+
+function clearFinalNumber() {
+    finalNumber = undefined;
 }
 
-function checkDecimalInNumberToString() {
-    let result  = false;
-    let i = 0;
-    while (i < numberToString.length) {
-        if (numberToString[i] == ".") {
-            result = true;
-            break;
-        }
-        i++;
-    }
-    return result;
+
+function clearNumberHolder() {
+    numberHolder = 0;
+}
+
+function clearCreateNumber() {
+    clearNumberHolder();
+    clearFinalNumber();
+}
+
+function clearNumberToString() {
+    numberToString = "";
 }
 
 function deleteLastEntry() {
@@ -183,22 +203,103 @@ function deleteLastEntry() {
     updateScreen();
 }
 
+function deleteLastDigitFinalNumber() {
+    numberHolder = numberHolder.slice(0, numberHolder.length-1);
+    finalNumber = Number(numberHolder);
+}
+
+function removeLastCharInNumberToString() {
+    changeDecimalFlag(numberToString);
+    numberToString = numberToString.slice(0, numberToString.length-1);
+}
+
+
+
+
+/************************************************************** 
+ * OTHER BACKEND FUNCTIONS
+ * 
+**************************************************************/
+
+function assignOperator(operator) {
+    currentOperator = operator;
+}
+
+function assignFirstOperand(operand) {
+    firstOperand = operand;
+}
+
+function assignSecondOperand(operand) {
+    secondOperand = operand;
+}
+
+function assignOperand() {
+    if (assignOperandFlag == true) {
+        if (firstOperandFlag == false) {
+            assignFirstOperand(finalNumber);
+            /*firstOperandFlag = true;*/
+            setFirstOperandFlag(true);
+            /*assignOperandFlag = false;*/
+            setAssignOperandFlag(false);
+            
+        }
+        else {
+            assignSecondOperand(finalNumber);
+            /*secondOperandFlag = true;*/
+            setSecondOperandFlag(true);
+            /*assignOperandFlag = false;*/
+            setAssignOperandFlag(false);
+        }
+    }
+}
+
 function changeDecimalFlag(entry) {
     if (entry[entry.length-1] == ".") {
         decimalFlag = false;
     }
 }
 
-function checkTrailingDecimal() {
-    if (screenTextHolder[screenTextHolder.length-1] == ".") {
-        screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
-        printToScreen("");
-    }
+function createNumber(enteredDigit) {
+    console.log("entered digit: " + enteredDigit);
+    numberHolder = numberHolder + enteredDigit;
+    console.log("numberHolder: " + numberHolder);
+    finalNumber = Number(numberHolder);
 }
 
-function removeLastCharInNumberToString() {
-    changeDecimalFlag(numberToString);
-    numberToString = numberToString.slice(0, numberToString.length-1);
+function resetDecimalFlag() {
+    decimalFlag = false;
+}
+
+function setEqualClearFlag(trueOrFalse) {
+    equalClearFlag = trueOrFalse;
+}
+
+function setAssignOperandFlag(trueOrFalse) {
+    assignOperandFlag = trueOrFalse;
+}
+
+function setLeadingZeroFlag(trueOrFalse) {
+    leadingZeroFlag = trueOrFalse;
+}
+
+function setFirstOperandFlag(trueOrFalse) {
+    firstOperandFlag = trueOrFalse;
+}
+
+function setSecondOperandFlag(trueOrFalse) {
+    secondOperandFlag = trueOrFalse;
+}
+
+
+
+
+/************************************************************** 
+ * SCREEN AND TEXT UPDATERS
+ * 
+**************************************************************/
+
+function createStringFromNumber(entry) {
+    numberToString += entry;
 }
 
 function replaceLastCharacter(entry) {
@@ -210,7 +311,6 @@ function replaceLastCharacterOperator(entry) {
     screenTextHolder = screenTextHolder.substring(0, screenTextHolder.length-9)
     printToScreen(entry);
 }
-
 
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
@@ -239,46 +339,21 @@ function updateScreen() {
 }
 
 
-function assignOperator(operator) {
-    currentOperator = operator;
-}
 
 
-function assignFirstOperand(operand) {
-    firstOperand = operand;
-}
-
-
-function assignSecondOperand(operand) {
-    secondOperand = operand;
-}
-
-
-function assignOperand() {
-    if (assignOperandFlag == true) {
-        if (firstOperandFlag == false) {
-            assignFirstOperand(finalNumber);
-            firstOperandFlag = true;
-            assignOperandFlag = false;
-            
-        }
-        else {
-            assignSecondOperand(finalNumber);
-            secondOperandFlag = true;
-            assignOperandFlag = false;
-        }
-    }
-}
-
-function checkAssignOperandFlag() {
-    return assignOperandFlag;
-}
+/************************************************************** 
+ * CALCULATION FUNCTIONS
+ * 
+**************************************************************/
 
 function calculate() {
     let result;
-    firstOperandFlag = false;
-    secondOperandFlag = false;
-    assignOperandFlag = true;
+    /*firstOperandFlag = false;*/
+    setFirstOperandFlag(false);
+    /*secondOperandFlag = false;*/
+    setSecondOperandFlag(false);
+    /*assignOperandFlag = true;*/
+    setAssignOperandFlag(true);
 
     switch(currentOperator) {
         case "+":
@@ -338,50 +413,12 @@ function continuousCalculation(entry) {
 }
 
 
-function createNumber(enteredDigit) {
-    console.log("entered digit: " + enteredDigit);
-    numberHolder = numberHolder + enteredDigit;
-    console.log("numberHolder: " + numberHolder);
-    finalNumber = Number(numberHolder);
-}
-
-function deleteLastDigitFinalNumber() {
-    numberHolder = numberHolder.slice(0, numberHolder.length-1);
-    finalNumber = Number(numberHolder);
-}
-
-
-function clearScreenEmpty() {
-    screenTextHolder = "";
-    $("p").text(screenTextHolder);
-}
-
-
-function clearFinalNumber() {
-    finalNumber = undefined;
-}
-
-
-function clearNumberHolder() {
-    numberHolder = 0;
-}
-
-
-function clearCreateNumber() {
-    clearNumberHolder();
-    clearFinalNumber();
-}
-
-function clearNumberToString() {
-    numberToString = "";
-}
 
 
 /************************************************************** 
  * BUTTON FUNCTIONS
  * 
 **************************************************************/
-
 
 function animateButton(currentKey) {
     var activeButton;
@@ -463,7 +500,8 @@ function press(key) {
             if (checkOperandLength() == true) {
                 if (equalClearFlag == true) {
                     clear();
-                    equalClearFlag = false;
+                    /*equalClearFlag = false;*/
+                    setEqualClearFlag(false);
                 }
                 if (leadingZeroChecker() == true && finalNumber == 0) {
                     animateButton(key); 
@@ -472,15 +510,18 @@ function press(key) {
                     createStringFromNumber(key);
                     createNumber(key);
                     printToScreen(key);
-                    leadingZeroFlag = true;
-                    assignOperandFlag = true;
+                    /*leadingZeroFlag = true;*/
+                    setLeadingZeroFlag(true);
+                    /*assignOperandFlag = true;*/
+                    setAssignOperandFlag(true);
                 }
                 else {
                     animateButton(key);
                     printToScreen(key);
                     createStringFromNumber(key);
                     createNumber(key);
-                    assignOperandFlag = true;
+                    /*assignOperandFlag = true;*/
+                    setAssignOperandFlag(true);
                 }
             }
             break;
@@ -497,14 +538,16 @@ function press(key) {
             if (checkOperandLength() == true) {
                 if (equalClearFlag == true) {
                     clear();
-                    equalClearFlag = false;
+                    /*equalClearFlag = false;*/
+                    setEqualClearFlag(false);
                 }
                 if (leadingZeroChecker() == true) {
                     animateButton(key);
                     lastCharacterChecker(key);
                     createStringFromNumber(key);
                     createNumber(key);
-                    leadingZeroFlag = false;
+                    /*leadingZeroFlag = false;*/
+                    setLeadingZeroFlag(false);
                 }
                 else {
                     animateButton(key);
@@ -512,7 +555,8 @@ function press(key) {
                     createStringFromNumber(key);
                     createNumber(key);
                 }
-                assignOperandFlag = true;
+                /*assignOperandFlag = true;*/
+                setAssignOperandFlag(true);
             }
             break;
         
@@ -526,8 +570,10 @@ function press(key) {
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
-            leadingZeroFlag = true;
-            equalClearFlag = false;
+            /*leadingZeroFlag = true;*/
+            setLeadingZeroFlag(true);
+            /*equalClearFlag = false;*/
+            setEqualClearFlag(false);
             break;
 
         case "*":
@@ -539,8 +585,10 @@ function press(key) {
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
-            leadingZeroFlag = true;
-            equalClearFlag = false;
+            /*leadingZeroFlag = true;*/
+            setLeadingZeroFlag(true);
+            /*equalClearFlag = false;*/
+            setEqualClearFlag(false);
             break;
 
         case "x":
@@ -552,8 +600,10 @@ function press(key) {
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
-            leadingZeroFlag = true;
-            equalClearFlag = false;
+            /*leadingZeroFlag = true;*/
+            setLeadingZeroFlag(true);
+            /*equalClearFlag = false;*/
+            setEqualClearFlag(false);
             break;
 
         case "/":
@@ -565,8 +615,10 @@ function press(key) {
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
-            leadingZeroFlag = true;
-            equalClearFlag = false;
+            /*leadingZeroFlag = true;*/
+            setLeadingZeroFlag(true);
+            /*equalClearFlag = false;*/
+            setEqualClearFlag(false);
             break;
 
         case "÷":
@@ -578,30 +630,36 @@ function press(key) {
             clearNumberToString();
             clearCreateNumber();
             resetDecimalFlag();
-            leadingZeroFlag = true;
-            equalClearFlag = false;
+            /*leadingZeroFlag = true;*/
+            setLeadingZeroFlag(true);
+            /*equalClearFlag = false;*/
+            setEqualClearFlag(false);
             break;
 
         case "=":
             animateButton(key);
             assignOperand();
             calculate();
-            equalClearFlag = true;
+            /*equalClearFlag = true;*/
+            setEqualClearFlag(true);
             secondOperand = undefined;
             break;
         
         case ".":
             if (equalClearFlag == true) {
                 clear();
-                equalClearFlag = false;
+                /*equalClearFlag = false;*/
+                setEqualClearFlag(false);
             }
             if (leadingZeroChecker() == true) {
-                leadingZeroFlag = false;
+                /*leadingZeroFlag = false;*/
+                setLeadingZeroFlag(false);
                 decimalLeadingZero();
             }
             animateButton(key);
             decimalChecker(key);
-            assignOperandFlag = true;
+            /*assignOperandFlag = true;*/
+            setAssignOperandFlag(true);
             break;
         
         case "Backspace":
