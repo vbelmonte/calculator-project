@@ -420,6 +420,23 @@ function continuousCalculation(entry) {
  * 
 **************************************************************/
 
+function operatorButton(key1, key2) {
+    animateButton(key2);
+    checkTrailingDecimal();
+    assignOperand();
+    continuousCalculation(key1);
+    replaceOperator(key2);
+    clearNumberToString();
+    clearCreateNumber();
+    resetDecimalFlag();
+    /*leadingZeroFlag = true;*/
+    setLeadingZeroFlag(true);
+    /*equalClearFlag = false;*/
+    setEqualClearFlag(false);
+}
+
+
+
 function animateButton(currentKey) {
     var activeButton;
 
@@ -561,7 +578,7 @@ function press(key) {
             break;
         
         case "+":
-        case "-":
+        case "-":/*
             animateButton(key);
             checkTrailingDecimal();
             assignOperand();
@@ -569,71 +586,76 @@ function press(key) {
             replaceOperator(key);
             clearNumberToString();
             clearCreateNumber();
-            resetDecimalFlag();
+            resetDecimalFlag();*/
             /*leadingZeroFlag = true;*/
-            setLeadingZeroFlag(true);
+            /*setLeadingZeroFlag(true);
             /*equalClearFlag = false;*/
-            setEqualClearFlag(false);
+            /*setEqualClearFlag(false);*/
+            operatorButton(key, key);
             break;
 
         case "*":
-            animateButton(multiplication);
+            /*animateButton(multiplication);
             checkTrailingDecimal();
             assignOperand();
             continuousCalculation(key);
             replaceOperator(multiplication);
             clearNumberToString();
             clearCreateNumber();
-            resetDecimalFlag();
+            resetDecimalFlag();*/
             /*leadingZeroFlag = true;*/
-            setLeadingZeroFlag(true);
+            /*setLeadingZeroFlag(true);*/
             /*equalClearFlag = false;*/
-            setEqualClearFlag(false);
+            /*setEqualClearFlag(false);*/
+            operatorButton(key, multiplication);
             break;
 
         case "x":
-            animateButton(multiplication);
+            /*animateButton(multiplication);
             checkTrailingDecimal();
             assignOperand();
             continuousCalculation(key);
             replaceOperator(multiplication);
             clearNumberToString();
             clearCreateNumber();
-            resetDecimalFlag();
+            resetDecimalFlag();*/
             /*leadingZeroFlag = true;*/
-            setLeadingZeroFlag(true);
+            /*setLeadingZeroFlag(true);*/
             /*equalClearFlag = false;*/
-            setEqualClearFlag(false);
+            /*setEqualClearFlag(false);*/
+            operatorButton(key, multiplication);
             break;
 
         case "/":
-            animateButton(division);
+            /*animateButton(division);
             checkTrailingDecimal();
             assignOperand();
             continuousCalculation(key);
             replaceOperator(division);
             clearNumberToString();
             clearCreateNumber();
-            resetDecimalFlag();
+            resetDecimalFlag();*/
             /*leadingZeroFlag = true;*/
-            setLeadingZeroFlag(true);
+            /*setLeadingZeroFlag(true);*/
             /*equalClearFlag = false;*/
-            setEqualClearFlag(false);
+            /*setEqualClearFlag(false);*/
+            operatorButton(key, division);
             break;
 
         case "÷":
-            animateButton(division);
+            /*animateButton(division);
             checkTrailingDecimal();
             assignOperand();
             continuousCalculation(key);
             replaceOperator(division);
             clearNumberToString();
             clearCreateNumber();
-            resetDecimalFlag();
+            resetDecimalFlag();*/
             /*leadingZeroFlag = true;*/
-            setLeadingZeroFlag(true);
+            /*setLeadingZeroFlag(true);*/
             /*equalClearFlag = false;*/
-            setEqualClearFlag(false);
+            /*setEqualClearFlag(false);*/
+            operatorButton(key, division);
             break;
 
         case "=":
