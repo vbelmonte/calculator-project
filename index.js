@@ -178,11 +178,9 @@ function clearScreenEmpty() {
     $("p").text(screenTextHolder);
 }
 
-
 function clearFinalNumber() {
     finalNumber = undefined;
 }
-
 
 function clearNumberHolder() {
     numberHolder = 0;
@@ -237,17 +235,13 @@ function assignOperand() {
     if (assignOperandFlag == true) {
         if (firstOperandFlag == false) {
             assignFirstOperand(finalNumber);
-            /*firstOperandFlag = true;*/
             setFirstOperandFlag(true);
-            /*assignOperandFlag = false;*/
             setAssignOperandFlag(false);
             
         }
         else {
             assignSecondOperand(finalNumber);
-            /*secondOperandFlag = true;*/
             setSecondOperandFlag(true);
-            /*assignOperandFlag = false;*/
             setAssignOperandFlag(false);
         }
     }
@@ -348,11 +342,8 @@ function updateScreen() {
 
 function calculate() {
     let result;
-    /*firstOperandFlag = false;*/
     setFirstOperandFlag(false);
-    /*secondOperandFlag = false;*/
     setSecondOperandFlag(false);
-    /*assignOperandFlag = true;*/
     setAssignOperandFlag(true);
 
     switch(currentOperator) {
