@@ -403,7 +403,6 @@ function calculate() {
     }
 }
 
-
 function continuousCalculation(entry) {
     if (secondOperandFlag == true) {
         calculate();
@@ -429,13 +428,90 @@ function operatorButton(key1, key2) {
     clearNumberToString();
     clearCreateNumber();
     resetDecimalFlag();
-    /*leadingZeroFlag = true;*/
     setLeadingZeroFlag(true);
-    /*equalClearFlag = false;*/
     setEqualClearFlag(false);
 }
 
+function numberButton(key) {
+    if (checkOperandLength() == true) {
+        if (equalClearFlag == true) {
+            clear();
+            setEqualClearFlag(false);
+        }
+        if (leadingZeroChecker() == true) {
+            animateButton(key);
+            lastCharacterChecker(key);
+            createStringFromNumber(key);
+            createNumber(key);
+            setLeadingZeroFlag(false);
+        }
+        else {
+            animateButton(key);
+            printToScreen(key);
+            createStringFromNumber(key);
+            createNumber(key);
+        }
+        setAssignOperandFlag(true);
+    }
+}
 
+function zeroButton(key) {
+    if (checkOperandLength() == true) {
+        if (equalClearFlag == true) {
+            clear();
+            setEqualClearFlag(false);
+        }
+        if (leadingZeroChecker() == true && finalNumber == 0) {
+            animateButton(key); 
+        }
+        else if (finalNumber == undefined) {
+            createStringFromNumber(key);
+            createNumber(key);
+            printToScreen(key);
+            setLeadingZeroFlag(true);
+            setAssignOperandFlag(true);
+        }
+        else {
+            animateButton(key);
+            printToScreen(key);
+            createStringFromNumber(key);
+            createNumber(key);
+            setAssignOperandFlag(true);
+        }
+    }
+}
+
+function equalButton(key) {
+    animateButton(key);
+    assignOperand();
+    calculate();
+    setEqualClearFlag(true);
+    secondOperand = undefined;
+}
+
+function decimalButton(key) {
+    if (equalClearFlag == true) {
+        clear();
+        setEqualClearFlag(false);
+    }
+    if (leadingZeroChecker() == true) {
+        setLeadingZeroFlag(false);
+        decimalLeadingZero();
+    }
+    animateButton(key);
+    decimalChecker(key);
+    setAssignOperandFlag(true);
+}
+
+function backspaceButton(key) {
+    deleteLastEntry();
+    animateButton(key);
+}
+
+function clearButton(key) {
+    animateButton(key);
+    clear();
+}
 
 function animateButton(currentKey) {
     var activeButton;
@@ -506,41 +582,15 @@ function animateButton(currentKey) {
     }, 100);
 }
 
-
 function press(key) {
     let division = "÷";
     let multiplication = "x";
+    let enter = "=";
     console.log(key);
 
     switch(key) {
         case "0":
-            if (checkOperandLength() == true) {
-                if (equalClearFlag == true) {
-                    clear();
-                    /*equalClearFlag = false;*/
-                    setEqualClearFlag(false);
-                }
-                if (leadingZeroChecker() == true && finalNumber == 0) {
-                    animateButton(key); 
-                }
-                else if (finalNumber == undefined) {
-                    createStringFromNumber(key);
-                    createNumber(key);
-                    printToScreen(key);
-                    /*leadingZeroFlag = true;*/
-                    setLeadingZeroFlag(true);
-                    /*assignOperandFlag = true;*/
-                    setAssignOperandFlag(true);
-                }
-                else {
-                    animateButton(key);
-                    printToScreen(key);
-                    createStringFromNumber(key);
-                    createNumber(key);
-                    /*assignOperandFlag = true;*/
-                    setAssignOperandFlag(true);
-                }
-            }
+            zeroButton(key);
             break;
 
         case "1":
@@ -552,155 +602,55 @@ function press(key) {
         case "7":
         case "8":
         case "9":
-            if (checkOperandLength() == true) {
-                if (equalClearFlag == true) {
-                    clear();
-                    /*equalClearFlag = false;*/
-                    setEqualClearFlag(false);
-                }
-                if (leadingZeroChecker() == true) {
-                    animateButton(key);
-                    lastCharacterChecker(key);
-                    createStringFromNumber(key);
-                    createNumber(key);
-                    /*leadingZeroFlag = false;*/
-                    setLeadingZeroFlag(false);
-                }
-                else {
-                    animateButton(key);
-                    printToScreen(key);
-                    createStringFromNumber(key);
-                    createNumber(key);
-                }
-                /*assignOperandFlag = true;*/
-                setAssignOperandFlag(true);
-            }
+            numberButton(key);
             break;
         
         case "+":
-        case "-":/*
-            animateButton(key);
-            checkTrailingDecimal();
-            assignOperand();
-            continuousCalculation(key);
-            replaceOperator(key);
-            clearNumberToString();
-            clearCreateNumber();
-            resetDecimalFlag();*/
-            /*leadingZeroFlag = true;*/
-            /*setLeadingZeroFlag(true);
-            /*equalClearFlag = false;*/
-            /*setEqualClearFlag(false);*/
+        case "-":
             operatorButton(key, key);
             break;
 
         case "*":
-            /*animateButton(multiplication);
-            checkTrailingDecimal();
-            assignOperand();
-            continuousCalculation(key);
-            replaceOperator(multiplication);
-            clearNumberToString();
-            clearCreateNumber();
-            resetDecimalFlag();*/
-            /*leadingZeroFlag = true;*/
-            /*setLeadingZeroFlag(true);*/
-            /*equalClearFlag = false;*/
-            /*setEqualClearFlag(false);*/
             operatorButton(key, multiplication);
             break;
 
         case "x":
-            /*animateButton(multiplication);
-            checkTrailingDecimal();
-            assignOperand();
-            continuousCalculation(key);
-            replaceOperator(multiplication);
-            clearNumberToString();
-            clearCreateNumber();
-            resetDecimalFlag();*/
-            /*leadingZeroFlag = true;*/
-            /*setLeadingZeroFlag(true);*/
-            /*equalClearFlag = false;*/
-            /*setEqualClearFlag(false);*/
             operatorButton(key, multiplication);
             break;
 
         case "/":
-            /*animateButton(division);
-            checkTrailingDecimal();
-            assignOperand();
-            continuousCalculation(key);
-            replaceOperator(division);
-            clearNumberToString();
-            clearCreateNumber();
-            resetDecimalFlag();*/
-            /*leadingZeroFlag = true;*/
-            /*setLeadingZeroFlag(true);*/
-            /*equalClearFlag = false;*/
-            /*setEqualClearFlag(false);*/
             operatorButton(key, division);
             break;
 
         case "÷":
-            /*animateButton(division);
-            checkTrailingDecimal();
-            assignOperand();
-            continuousCalculation(key);
-            replaceOperator(division);
-            clearNumberToString();
-            clearCreateNumber();
-            resetDecimalFlag();*/
-            /*leadingZeroFlag = true;*/
-            /*setLeadingZeroFlag(true);*/
-            /*equalClearFlag = false;*/
-            /*setEqualClearFlag(false);*/
             operatorButton(key, division);
             break;
 
         case "=":
-            animateButton(key);
-            assignOperand();
-            calculate();
-            /*equalClearFlag = true;*/
-            setEqualClearFlag(true);
-            secondOperand = undefined;
+            equalButton(key);
+            break;
+
+        case "Enter":
+            equalButton(enter);
             break;
         
         case ".":
-            if (equalClearFlag == true) {
-                clear();
-                /*equalClearFlag = false;*/
-                setEqualClearFlag(false);
-            }
-            if (leadingZeroChecker() == true) {
-                /*leadingZeroFlag = false;*/
-                setLeadingZeroFlag(false);
-                decimalLeadingZero();
-            }
-            animateButton(key);
-            decimalChecker(key);
-            /*assignOperandFlag = true;*/
-            setAssignOperandFlag(true);
+            decimalButton(key);
             break;
         
         case "Backspace":
         case "←":
-            deleteLastEntry();
-            animateButton(key);
+            backspaceButton(key);
             break;
         
         case "clear":
-            animateButton(key);
-            clear();
-            break;
-        
         case "c":
-            animateButton(key);
-            clear();
+            clearButton(key);
             break;
     }
 }
+
+
 
 
 /************************************************************** 
