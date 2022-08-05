@@ -4,7 +4,7 @@ let assignOperandFlag = true;
 let currentOperator = undefined;
 let operatorFlag = false;
 let equalClearFlag = false;
-let numberHolder = 0;
+let numberHolder = "";
 let finalNumber = 0;
 let numberToString = "";
 let firstOperandFlag = false;
@@ -158,7 +158,7 @@ function clear() {
     currentOperator = undefined;
     operatorFlag = false;
     equalClearFlag = false;
-    numberHolder = 0;
+    numberHolder = "";
     finalNumber = 0;
     numberToString = "";
     firstOperandFlag = false;
@@ -183,7 +183,7 @@ function clearFinalNumber() {
 }
 
 function clearNumberHolder() {
-    numberHolder = 0;
+    numberHolder = "";
 }
 
 function clearCreateNumber() {
@@ -203,7 +203,12 @@ function deleteLastEntry() {
 
 function deleteLastDigitFinalNumber() {
     numberHolder = numberHolder.slice(0, numberHolder.length-1);
-    finalNumber = Number(numberHolder);
+    if (numberHolder == "") {
+        finalNumber = undefined;
+    }
+    else {
+        finalNumber = Number(numberHolder);
+    }
 }
 
 function removeLastCharInNumberToString() {
@@ -257,7 +262,12 @@ function createNumber(enteredDigit) {
     console.log("entered digit: " + enteredDigit);
     numberHolder = numberHolder + enteredDigit;
     console.log("numberHolder: " + numberHolder);
-    finalNumber = Number(numberHolder);
+    if (numberHolder == "") {
+        finalNumber = undefined;
+    }
+    else {
+        finalNumber = Number(numberHolder);
+    }
 }
 
 function resetDecimalFlag() {
