@@ -1,10 +1,37 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 98vh;
+    height: 100vh;
     font-family: Inter, Helvetica, sans-serif;
     font-weight: normal;
+    margin: 0;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+    padding: 10px 0px 15px 0px;
+}
+
+footer p {
+    color: gray;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.icon {
+    filter: invert(30%) sepia(0%) saturate(1863%) hue-rotate(154deg) brightness(92%) contrast(85%);
+    width: 30px;
+    height: 30px;   
 }
 
 .calculator {
