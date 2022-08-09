@@ -170,12 +170,12 @@ function clear() {
 }
 
 function clearScreen() {
-    $("p").text("0");
+    $(".screen-output").text(screenTextHolder);
 }
 
 function clearScreenEmpty() {
     screenTextHolder = "";
-    $("p").text(screenTextHolder);
+    $(".screen-output").text(screenTextHolder);
 }
 
 function clearFinalNumber() {
@@ -318,7 +318,7 @@ function replaceLastCharacterOperator(entry) {
 
 function printToScreen(entry) {
     screenTextHolder = screenTextHolder + entry;
-    $("p").html(screenTextHolder);
+    $(".screen-output").html(screenTextHolder);
 }
 
 function updateScreen() {
@@ -337,7 +337,7 @@ function updateScreen() {
         case "0":
         case ".":
             screenTextHolder = screenTextHolder.slice(0, screenTextHolder.length-1);
-            $("p").html(screenTextHolder);
+            $(".screen-output").html(screenTextHolder);
             break;
     }
 }
