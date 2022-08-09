@@ -3,10 +3,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     font-family: Inter, Helvetica, sans-serif;
     font-weight: normal;
     margin: 0;
+    padding-top: 50px;
+    box-sizing: border-box;
 }
 
 footer {
@@ -38,6 +40,7 @@ a {
     width: 30px;
     height: 30px;   
 }
+
 
 .calculator {
     display: flex;
