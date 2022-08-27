@@ -6,7 +6,7 @@ let operatorFlag = false;
 let equalClearFlag = false;
 let numberHolder = "";
 let finalNumber = 0;
-let numberToString = "";
+let numberToString = "0"; /*"";*/
 let firstOperandFlag = false;
 let secondOperandFlag = false;
 let screenTextHolder = "0";
@@ -102,7 +102,7 @@ function decimalChecker(decimal) {
 
 function decimalLeadingZero() {
     if (decimalFlag == false) {
-        if (screenTextHolder.substring(screenTextHolder.length-1) != 0) {
+        if (/*screenTextHolder.substring(screenTextHolder.length-1) != 0 ||*/ numberToString == "") {
             createNumber("0");
             printToScreen("0");
         }
@@ -160,7 +160,7 @@ function clear() {
     equalClearFlag = false;
     numberHolder = "";
     finalNumber = 0;
-    numberToString = "";
+    numberToString = "0"; /*"";*/
     firstOperandFlag = false;
     secondOperandFlag = false;
     screenTextHolder = "0";
@@ -195,6 +195,24 @@ function clearNumberToString() {
     numberToString = "";
 }
 
+function clearAllValues() {
+    firstOperand = undefined;
+    secondOperand = undefined;
+    assignOperandFlag = true;
+    currentOperator = undefined;
+    operatorFlag = false;
+    equalClearFlag = false;
+    numberHolder = "";
+    finalNumber = 0;
+    numberToString = "";
+    firstOperandFlag = false;
+    secondOperandFlag = false;
+    screenTextHolder = "0";
+    decimalFlag = false;
+    leadingZeroFlag = true;
+    clearScreen();
+}
+
 function deleteLastEntry() {
     removeLastCharInNumberToString();
     deleteLastDigitFinalNumber();
@@ -205,6 +223,7 @@ function deleteLastDigitFinalNumber() {
     numberHolder = numberHolder.slice(0, numberHolder.length-1);
     if (numberHolder == "") {
         finalNumber = undefined;
+        leadingZeroFlag = true; /*** don't know if we need this to fix leading zero in the first operand... ***/
     }
     else {
         finalNumber = Number(numberHolder);
@@ -436,7 +455,8 @@ function operatorButton(key1, key2) {
 function numberButton(key) {
     if (checkOperandLength() == true) {
         if (equalClearFlag == true) {
-            clear();
+            /*clear();*/
+            clearAllValues();
             setEqualClearFlag(false);
         }
         if (leadingZeroChecker() == true) {
@@ -459,7 +479,8 @@ function numberButton(key) {
 function zeroButton(key) {
     if (checkOperandLength() == true) {
         if (equalClearFlag == true) {
-            clear();
+            /*clear();*/
+            clearAllValues();
             setEqualClearFlag(false);
         }
         if (leadingZeroChecker() == true && finalNumber == 0) {
@@ -492,7 +513,8 @@ function equalButton(key) {
 
 function decimalButton(key) {
     if (equalClearFlag == true) {
-        clear();
+        /*clear();*/
+        clearAllValues();
         setEqualClearFlag(false);
     }
     if (leadingZeroChecker() == true) {
