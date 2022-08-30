@@ -24,7 +24,7 @@ footer p {
     text-transform: uppercase;
 }
 
-section {
+main {
     display: flex;
     align-items: center;
     flex: 1;
