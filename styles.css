@@ -66,6 +66,10 @@ a {
     text-align: right;
 }
 
+.glow-frame {
+    box-shadow: 0px 0px 2px 2px #4E4E4E;
+}
+
 .row {
     display: flex;
     justify-content: space-between;

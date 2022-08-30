@@ -685,6 +685,17 @@ $("button").click(function()  {
     press($(this).text());
 });
 
+$("button").on("mousedown", function() {
+    $(".screen").addClass("glow-frame");
+}).on("mouseup", function() {
+    $(".screen").removeClass("glow-frame");
+});
+
 document.addEventListener("keydown", function(event) {
     press(event.key);
+    $(".screen").addClass("glow-frame");
 });
+
+document.addEventListener("keyup", function() {
+    $(".screen").removeClass("glow-frame");
+})
