@@ -534,7 +534,13 @@ function decimalButton(key) {
 }
 
 function backspaceButton(key) {
-    deleteLastEntry();
+    /* Cannot allow backspace on results after hitting "equal" */
+    if (equalClearFlag == false) {
+        deleteLastEntry();
+    }
+    else {
+        clear();
+    }
     animateButton(key);
 }
 
