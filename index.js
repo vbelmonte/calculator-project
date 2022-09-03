@@ -222,7 +222,7 @@ function deleteLastEntry() {
 
 function deleteLastDigitFinalNumber() {
     numberHolder = numberHolder.slice(0, numberHolder.length-1);
-    if (numberHolder == "" || numberHolder == "0") {
+    if (numberHolder == "" /*|| numberHolder == "0"*/) {
         finalNumber = undefined;
         leadingZeroFlag = true;
     }
@@ -249,7 +249,14 @@ function assignOperator(operator) {
 }
 
 function assignFirstOperand(operand) {
-    firstOperand = operand;
+    /** Check if it's an empty operand **/
+    if (operand == undefined && screenTextHolder != "Error") {
+        firstOperand = 0;
+        printToScreen(0);
+    }
+    else {
+        firstOperand = operand;
+    }
 }
 
 function assignSecondOperand(operand) {
