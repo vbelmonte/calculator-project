@@ -102,6 +102,10 @@ button:active {
 
 }
 
+button:disabled {
+    opacity: 0.5;
+}
+
 .clear-equal button {
     width: 246px;
 }

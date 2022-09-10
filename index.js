@@ -346,6 +346,7 @@ function disableButtons() {
     document.getElementsByClassName("multiply")[0].disabled = true;
     document.getElementsByClassName("divide")[0].disabled = true;
     document.getElementById("equal").disabled = true;
+    $(".operator").css("pointer-events", "none");
 }
 
 function enableButtons() {
@@ -355,6 +356,7 @@ function enableButtons() {
     document.getElementsByClassName("multiply")[0].disabled = false;
     document.getElementsByClassName("divide")[0].disabled = false;
     document.getElementById("equal").disabled = false;
+    $(".operator").css("pointer-events", "auto");
 }
 
 
