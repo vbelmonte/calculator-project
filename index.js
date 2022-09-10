@@ -145,6 +145,20 @@ function replaceOperator(operator) {
     }
 }
 
+function checkDisabledButtons() {
+    if (document.getElementById("equal").disabled == true) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function checkToEnableButtons() {
+    if (checkDisabledButtons() == true) {
+        enableButtons();
+    }
+}
 
 
 /************************************************************** 
@@ -203,9 +217,9 @@ function clearAllValues() {
     currentOperator = undefined;
     operatorFlag = false;
     equalClearFlag = false;
-    numberHolder = "";
+    numberHolder = "0";
     finalNumber = 0;
-    numberToString = "";
+    numberToString = "0";
     firstOperandFlag = false;
     secondOperandFlag = false;
     screenTextHolder = "0";
@@ -222,8 +236,12 @@ function deleteLastEntry() {
 
 function deleteLastDigitFinalNumber() {
     numberHolder = numberHolder.slice(0, numberHolder.length-1);
-    if (numberHolder == "" /*|| numberHolder == "0"*/) {
+    if (numberHolder == "") {
         finalNumber = undefined;
+        leadingZeroFlag = true;
+    }
+    else if (numberHolder == "0") {
+        finalNumber = 0;
         leadingZeroFlag = true;
     }
     else {
@@ -321,6 +339,23 @@ function setSecondOperandFlag(trueOrFalse) {
     secondOperandFlag = trueOrFalse;
 }
 
+function disableButtons() {
+    console.log("BUTTONS DISABLED!");
+    document.getElementsByClassName("add")[0].disabled = true;
+    document.getElementsByClassName("subtract")[0].disabled = true;
+    document.getElementsByClassName("multiply")[0].disabled = true;
+    document.getElementsByClassName("divide")[0].disabled = true;
+    document.getElementById("equal").disabled = true;
+}
+
+function enableButtons() {
+    console.log("BUTTONS ENABLED!");
+    document.getElementsByClassName("add")[0].disabled = false;
+    document.getElementsByClassName("subtract")[0].disabled = false;
+    document.getElementsByClassName("multiply")[0].disabled = false;
+    document.getElementsByClassName("divide")[0].disabled = false;
+    document.getElementById("equal").disabled = false;
+}
 
 
 
@@ -422,6 +457,7 @@ function calculate() {
         clearNumberToString();
         clearScreenEmpty();
         printToScreen(result);
+        disableButtons();   
     }
     else {
         clearCreateNumber();
@@ -494,7 +530,7 @@ function zeroButton(key) {
         if (leadingZeroChecker() == true && finalNumber == 0) {
             animateButton(key); 
         }
-        else if (finalNumber == undefined) {
+        else if (finalNumber == undefined && numberToString == "") {
             createStringFromNumber(key);
             createNumber(key);
             printToScreen(key);
@@ -638,6 +674,7 @@ function press(key) {
         case "7":
         case "8":
         case "9":
+            checkToEnableButtons();
             numberButton(key);
             break;
         
@@ -671,16 +708,19 @@ function press(key) {
             break;
         
         case ".":
+            checkToEnableButtons();
             decimalButton(key);
             break;
         
         case "Backspace":
         case "←":
+            checkToEnableButtons();
             backspaceButton(key);
             break;
         
         case "clear":
         case "c":
+            checkToEnableButtons();
             clearButton(key);
             break;
     }

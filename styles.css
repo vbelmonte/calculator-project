@@ -88,14 +88,17 @@ button {
 
 .buttonPressed {
     -webkit-filter: brightness(1.25);
+    filter: brightness(1.25);
 }
 
 button:hover {
     -webkit-filter: brightness(1.10);
+    filter: brightness(1.10);
 }
 
 button:active {
     -webkit-filter: brightness(1.25); 
+    filter: brightness(1.25);
 
 }
 
