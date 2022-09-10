@@ -63,9 +63,23 @@ function checkDecimalInNumberToString() {
     return result;
 }
 
+function checkDisabledButtons() {
+    if (document.getElementById("equal").disabled == true) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function checkToEnableButtons() {
+    if (checkDisabledButtons() == true) {
+        enableButtons();
+    }
+}
+
 function checkOperandLength() {
     if (checkDecimalInNumberToString() == false) {
-        console.log("The string does not have a decimal");
         if (numberToString.length < 18) {
             return true;
         }
@@ -74,7 +88,6 @@ function checkOperandLength() {
         }
     }
     else {
-        console.log("The string has a decimal");
         if (numberToString.length < 19) {
             return true;
         }
@@ -142,21 +155,6 @@ function replaceOperator(operator) {
         let txt = "<br>" + operator + "<br>";
         assignOperator(operator);
         printToScreen(txt);
-    }
-}
-
-function checkDisabledButtons() {
-    if (document.getElementById("equal").disabled == true) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-function checkToEnableButtons() {
-    if (checkDisabledButtons() == true) {
-        enableButtons();
     }
 }
 
@@ -304,15 +302,31 @@ function changeDecimalFlag(entry) {
 }
 
 function createNumber(enteredDigit) {
-    console.log("entered digit: " + enteredDigit);
     numberHolder = numberHolder + enteredDigit;
-    console.log("numberHolder: " + numberHolder);
     if (numberHolder == "") {
         finalNumber = undefined;
     }
     else {
         finalNumber = Number(numberHolder);
     }
+}
+
+function disableButtons() {
+    document.getElementsByClassName("add")[0].disabled = true;
+    document.getElementsByClassName("subtract")[0].disabled = true;
+    document.getElementsByClassName("multiply")[0].disabled = true;
+    document.getElementsByClassName("divide")[0].disabled = true;
+    document.getElementById("equal").disabled = true;
+    $(".operator").css("pointer-events", "none");
+}
+
+function enableButtons() {
+    document.getElementsByClassName("add")[0].disabled = false;
+    document.getElementsByClassName("subtract")[0].disabled = false;
+    document.getElementsByClassName("multiply")[0].disabled = false;
+    document.getElementsByClassName("divide")[0].disabled = false;
+    document.getElementById("equal").disabled = false;
+    $(".operator").css("pointer-events", "auto");
 }
 
 function resetDecimalFlag() {
@@ -337,26 +351,6 @@ function setFirstOperandFlag(trueOrFalse) {
 
 function setSecondOperandFlag(trueOrFalse) {
     secondOperandFlag = trueOrFalse;
-}
-
-function disableButtons() {
-    console.log("BUTTONS DISABLED!");
-    document.getElementsByClassName("add")[0].disabled = true;
-    document.getElementsByClassName("subtract")[0].disabled = true;
-    document.getElementsByClassName("multiply")[0].disabled = true;
-    document.getElementsByClassName("divide")[0].disabled = true;
-    document.getElementById("equal").disabled = true;
-    $(".operator").css("pointer-events", "none");
-}
-
-function enableButtons() {
-    console.log("BUTTONS ENABLED!");
-    document.getElementsByClassName("add")[0].disabled = false;
-    document.getElementsByClassName("subtract")[0].disabled = false;
-    document.getElementsByClassName("multiply")[0].disabled = false;
-    document.getElementsByClassName("divide")[0].disabled = false;
-    document.getElementById("equal").disabled = false;
-    $(".operator").css("pointer-events", "auto");
 }
 
 
@@ -660,7 +654,6 @@ function press(key) {
     let division = "÷";
     let multiplication = "x";
     let enter = "=";
-    console.log(key);
 
     switch(key) {
         case "0":
