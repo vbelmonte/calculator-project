@@ -106,6 +106,10 @@ button:disabled {
     opacity: 0.5;
 }
 
+button:focus-visible {
+    outline-style: none;
+}
+
 .clear-equal button {
     width: 246px;
 }

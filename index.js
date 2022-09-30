@@ -729,11 +729,8 @@ function press(key) {
  * 
 **************************************************************/
 
-$("button").click(function()  {
-    press($(this).text());
-});
-
 $("button").on("mousedown", function() {
+    press($(this).text());
     $(".screen").addClass("glow-frame");
 }).on("mouseup", function() {
     $(".screen").removeClass("glow-frame");
